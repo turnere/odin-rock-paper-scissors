@@ -1,7 +1,9 @@
+//To create the computer selection.
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
 
+//Uses the random to get a computer selection from 0 - 2.
 function getComputerChoice() {
     let computerInt = getRandomInt(3);
     console.log(computerInt);
@@ -23,23 +25,52 @@ function getComputerChoice() {
     return computerChoice;
 }
 
+//Compares player selection to computer selection and returns who won or tie.
 function playRound(playerSelection, computerSelction) {
     let result;
 
     if (playerSelection === computerSelction) {
-        result = 'Tie!';
+        result = 'tie';
     }
     else if ((playerSelection === 'rock' && computerSelction === 'paper') || (playerSelection === 'paper' && computerSelction === 'scissors') || (playerSelection === 'scissors' && computerSelction === 'rock')){
-        result = 'Computer wins!';
+        result = 'computer';
     }
     else {
-        result = 'You win!';
+        result = 'player';
     }
     return result;
 }
 
-const playerSelection = "rock";
-const computerSelction = getComputerChoice();
+//Compares round result and totals everything for 5 rounds.
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+    
+    for (let round = 1; round < 6; round++) {
+        //Runs 5 times.
+        console.log(`Round ${round}`);
 
-console.log(playRound(playerSelection, computerSelction));
+        let playerSelection = prompt("rock, paper, scissors?");
+        const computerSelction = getComputerChoice();
 
+        let roundResult = playRound(playerSelection, computerSelction);
+        console.log(roundResult);
+
+        if (roundResult === 'tie') {
+            console.log("It's a tie! Replay!");
+            round--;
+        }
+        else if (roundResult === 'computer') {
+            computerScore++;
+            console.log("The computer wins!");
+            console.log(`Computer: ${computerScore} You: ${playerScore}`);
+        }
+        else {
+            playerScore++;
+            console.log("You won!");
+            console.log(`Computer: ${computerScore} You: ${playerScore}`);
+        }
+    }
+}
+
+game();
